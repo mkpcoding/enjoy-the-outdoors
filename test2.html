@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search National Parks</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Search National Parks</h1>
+      <select name="searchParkTypes" id="search-parktypes-list" onchange="handleSearchChanged('parkType');"></select>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip</th>
+            <th>Phone</th>
+            <th>Website</th>
+          </tr>
+        </thead>
+        <tbody id="parks-tbl-body"></tbody>
+      </table>
+    </main>
+    <script>
+      "use strict";
+      
+      const parkTypeData = [
+        "National Park",
+        "National Monument",
+        "Recreation Area",
+        "Scenic Trail",
+        "Battlefield",
+        "Historic",
+        "Memorial",
+        "Preserve",
+        "Island",
+        "River",
+        "Seashore",
+        "Trail",
+        "Parkway"
+      ];
+
+      const locationData = [
+        /* Your locationData */
+      ];
+
+      const nationalParks = [
+        /* Your nationalParks data */
+      ];
+      
+      const parkTypeOptionsList = document.querySelector("#search-parktypes-list");
+      const locationOptionsList = document.querySelector("#search-locations-list");
+      const parksTableBody = document.querySelector("#parks-tbl-body");
+
+      function loadParkTypeOptionsList() {
+        let option = new Option("Select Park Type...", "");
+        parkTypeOptionsList.appendChild(option);
+
+        for (const option of parkTypeData) {
+          let opt = document.createElement("option");
+          opt.value = option;
+          opt.innerText = option;
+          parkTypeOptionsList.appendChild(opt);
+        }
+      }
+      loadParkTypeOptionsList();
+
+      function loadLocationOptionsList() {
+        let option = new Option("Select Location...", "");
+        locationOptionsList.appendChild(option);
+
+        for (const option of locationData) {
+          let opt = document.createElement("option");
+          opt.value = option;
+          opt.innerText = option;
+          locationOptionsList.appendChild(opt);
+        }
+      }
+      loadLocationOptionsList();
+
+      function buildParkRow(tbody, park) {
+        /* Same as previous */
+      }
+
+      function loadParksTable(searchOption, optionValue) {
+        parksTableBody.innerHTML = "";
+        let filteredParks;
+        if (searchOption === 'parkType') {
+          filteredParks = nationalParks.filter(
+            (park)

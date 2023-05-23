@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css.css">
+</head>
+<body>
+
+  <h1>Search National Parks</h1>
+  <input type="radio" id="locationRadio" name="searchType" value="location"  onchange="changeSearchType(this.value)">
+  <label for="locationRadio">Location Type</label>
+  
+  <input type="radio"  id="parkTypeRadio" name="searchType" value="parkType" onchange="changeSearchType(this.value)">
+  <label for="parkTypeRadio">Park Type</label>
+
+  <div id="searchByLocation">
+    <label for="location">Location:</label>
+    <select id="location" onchange="searchByLocation(this.value)"></select>
+  </div>
+
+  <div id="searchByParkType">
+    <label for="parkType">Park Type:</label>
+    <select id="parkType" onchange="searchByParkType(this.value)"></select>
+  </div>
+
+  <table id="results">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip</th>
+            <th>Phone</th>
+            <th>Website</th>
+        </tr>
+    </thead>
+
+    <tbody id="results-body">
+    </tbody>
+    
+  </table>
+
+  <script src="scripts/parkTypeData.js"></script>
+  <script src="scripts/locationData.js"></script>
+  <script src="scripts/nationalParkData.js"></script>
+  <script>
+    
+
+    window.onload = function() {
+      populateLocationDropdown();
+      populateParkTypeDropdown();
+    };
+
+    function populateLocationDropdown() {
+      var dropdown = document.getElementById('location');
+      populateDropdown(dropdown, locationsArray);
+    }
+
+    function populateParkTypeDropdown() { //*** 
+      var dropdown = document.getElementById('parkType');
+      populateDropdown(dropdown, parkTypesArray);
+    }
+
+    function populateDropdown(dropdown, dataArr) {
+        for (let item of dataArr) {
+            let option = document.createElement('option');
+            option.value = item; // ? 
+            option.text = item;
+            dropdown.add(option);
+        }
+    }
+
+    function changeSearchType(value)  { // we did this funtion for the showing the changes
+    const locationElement = document.querySelector('#searchByLocation'); 
+    const parkTypeElement = document.querySelector('#searchByParkType');
+
+      if (value == 'parkType') 
+  {
+        locationElement.style.display = 'none';
+        parkTypeElement.style.display = 'block';
+      } else {
+        locationElement.style.display = 'block';
+        parkTypeElement.style.display = 'none';
+      }
+    }
+
+    function searchByLocation(value) {
+    let results = nationalParksArray.filter(park => park.State === value);
+      displayResults(results);
+    }
+
+    function searchByParkType(value) {
+      let results = nationalParksArray.filter(park => park.LocationName.includes(value));
+      displayResults(results);
+    }
+    
+
+    function displayResults(results) {
+      var resultsTable = document.getElementById('results-body');
+      resultsTable.innerHTML = "";
+    //   Clear the previous results
+    /// ? 
+
+      for (let result of results) {
+        let row = resultsTable.insertRow();
+        row.insertCell().innerText = result.LocationName;
+        row.insertCell().innerText = result.Address;
+        row.insertCell().innerText = result.City;
+        row.insertCell().innerText = result.State;
+        row.insertCell().innerText = result.ZipCode;
+        row.insertCell().innerText = result.Phone;
+        row.insertCell().innerText = result.Visit;
+    }
+    }
+
+        </script>
+    
+</body>
+</html>
