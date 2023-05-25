@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css" />
+</head>
+
+
+
+<body>
+    <main>
+        <h1>Football Example</h1>
+        <select name="teams" id="teams-list">
+
+        </select>
+        <button id="displayButton" onclick="displaySelectedTeam();">Display Selected Team</button>
+        <p id="selected-team-paragraph"></p>
+    </main>
+    <script>
+        "use strict";
+
+        let teams = [
+            { code: "DAL", name: "Dallas Cowboys", plays: "Arlington, TX" },
+            { code: "DEN", name: "Denver Broncos", plays: "Denver, CO" },
+            { code: "HOU", name: "Houston Texans", plays: "Houston, TX" },
+            {
+                code: "KAN", name: "Kansas City Chiefs",
+                plays: "Kansas City, MO"
+            },
+        ];
+
+        const teamsList = document.querySelector("select#teams-list");
+        const selectedTeamParagraph = document.querySelector("p#selected-team-paragraph");
+
+        function loadTeamsList() {
+            for (const team of teams) {
+                let option = document.createElement("option");
+                option.value = team.code;
+                option.textContent = team.name;
+                teamsList.appendChild(option);
+            }
+        }
+
+        loadTeamsList();
+
+        function findTeamByCode(code) {
+            for (const team of teams) {
+                if (team.code === code) {
+                    return team;
+                }
+            }
+        }
+
+        function displaySelectedTeam() {
+            const teamCode = teamsList.value;
+            const team = findTeamByCode(teamCode);
+            selectedTeamParagraph.innerText = `The ${team.name} play in ${team.plays}.`;
+        }
+    </script>
+</body>
+
+</html>

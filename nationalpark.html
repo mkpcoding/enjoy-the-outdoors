@@ -5,120 +5,79 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css.css">
-</head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+  </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      
+      <a class="navbar-brand" href="#">Enjoy the Outdoor</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="homepage.html">Home Page</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="mountains.html">Mountains</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="nationalpark.html">National Parks Search Page</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-  <h1>Search National Parks</h1>
-  <input type="radio" id="locationRadio" name="searchType" value="location"  onchange="changeSearchType(this.value)">
-  <label for="locationRadio">Location Type</label>
+  <div class="container mt-4">
+    <h1 class="text-center mb-4 display-3">Search National Parks</h1>
+
+    <div class="card bg-dark mb-3 p-3">
+      
+      <div class="d-flex justify-content-center">
+        <div class="form-check form-switch me-3">
+          <input class="form-check-input" type="radio" name="searchType" id="locationRadio" value="location" onchange="changeSearchType(this.value)">
+          <label class="form-check-label" for="locationRadio">Location Type</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="radio" name="searchType" id="parkTypeRadio" value="parkType" onchange="changeSearchType(this.value)">
+          <label class="form-check-label" for="parkTypeRadio">Park Type</label>
+        </div>
+      </div>
+    </div>
+
+    <div id="searchByLocation" class="mb-3">
+      <label for="location" class="form-label">Location:</label>
+      <select id="location" class="form-select" onchange="searchByLocation(this.value)"></select>
+    </div>
   
-  <input type="radio"  id="parkTypeRadio" name="searchType" value="parkType" onchange="changeSearchType(this.value)">
-  <label for="parkTypeRadio">Park Type</label>
-
-  <div id="searchByLocation">
-    <label for="location">Location:</label>
-    <select id="location" onchange="searchByLocation(this.value)"></select>
-  </div>
-
-  <div id="searchByParkType">
-    <label for="parkType">Park Type:</label>
-    <select id="parkType" onchange="searchByParkType(this.value)"></select>
-  </div>
-
-  <table id="results">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>State</th>
-            <th>Zip</th>
-            <th>Phone</th>
-            <th>Website</th>
-        </tr>
+    <div id="searchByParkType" class="mb-3">
+      <label for="parkType" class="form-label">Park Type:</label>
+      <select id="parkType" class="form-select" onchange="searchByParkType(this.value)"></select>
+    </div>
+  
+    <table id="results" class="table table-striped table-hover table-dark text-center">
+      <thead  class="thead-dark">
+      <tr>
+        <th scope="col">Number</th>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">City</th>
+        <th scope="col">State</th>
+        <th scope="col">Zip</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Website</th>
+      </tr>
     </thead>
-
     <tbody id="results-body">
     </tbody>
-    
   </table>
-
-  <script src="scripts/parkTypeData.js"></script>
-  <script src="scripts/locationData.js"></script>
-  <script src="scripts/nationalParkData.js"></script>
-  <script>
-    
-
-    window.onload = function() {
-      populateLocationDropdown();
-      populateParkTypeDropdown();
-    };
-
-    function populateLocationDropdown() {
-      var dropdown = document.getElementById('location');
-      populateDropdown(dropdown, locationsArray);
-    }
-
-    function populateParkTypeDropdown() { //*** 
-      var dropdown = document.getElementById('parkType');
-      populateDropdown(dropdown, parkTypesArray);
-    }
-
-    function populateDropdown(dropdown, dataArr) {
-        for (let item of dataArr) {
-            let option = document.createElement('option');
-            option.value = item; // ? 
-            option.text = item;
-            dropdown.add(option);
-        }
-    }
-
-    function changeSearchType(value)  { // we did this funtion for the showing the changes
-    const locationElement = document.querySelector('#searchByLocation'); 
-    const parkTypeElement = document.querySelector('#searchByParkType');
-
-      if (value == 'parkType') 
-  {
-        locationElement.style.display = 'none';
-        parkTypeElement.style.display = 'block';
-      } else {
-        locationElement.style.display = 'block';
-        parkTypeElement.style.display = 'none';
-      }
-    }
-
-    function searchByLocation(value) {
-    let results = nationalParksArray.filter(park => park.State === value);
-      displayResults(results);
-    }
-
-    function searchByParkType(value) {
-      let results = nationalParksArray.filter(park => park.LocationName.includes(value));
-      displayResults(results);
-    }
-    
-
-    function displayResults(results) {
-      var resultsTable = document.getElementById('results-body');
-      resultsTable.innerHTML = "";
-    //   Clear the previous results
-    /// ? 
-
-      for (let result of results) {
-        let row = resultsTable.insertRow();
-        row.insertCell().innerText = result.LocationName;
-        row.insertCell().innerText = result.Address;
-        row.insertCell().innerText = result.City;
-        row.insertCell().innerText = result.State;
-        row.insertCell().innerText = result.ZipCode;
-        row.insertCell().innerText = result.Phone;
-        row.insertCell().innerText = result.Visit;
-    }
-    }
-
-        </script>
+  
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="scripts/parkTypeData.js"></script>
+<script src="scripts/locationData.js"></script>
+<script src="scripts/nationalParkData.js"></script>
+<script src="scripts/nationalparkscript.js"></script>
     
 </body>
 </html>
