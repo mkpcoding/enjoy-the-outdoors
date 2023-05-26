@@ -100,8 +100,18 @@ function displayResults(results) {
     row.appendChild(cell7);
 
     let cell8 = document.createElement("td");
-    cell8.textContent = result.Visit;
+    if (result.Visit) {
+      let link = document.createElement("a"); //creating html element, which is used to create hyperlinks, also known as anchor links.
+      link.href = result.Visit;
+      link.textContent = result.Visit; // Display the URL itself as the link text
+      link.target = "_blank"; //This comment indicates that the link will open in a new tab when clicked.
+      cell8.appendChild(link);
+    } else {
+      cell8.textContent = "-";
+    }
+
     row.appendChild(cell8);
+
 
     resultsTable.appendChild(row);
   }
