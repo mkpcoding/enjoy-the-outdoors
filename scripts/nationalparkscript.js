@@ -5,7 +5,7 @@ window.onload = function () {
   populateLocationDropdown();
   populateParkTypeDropdown();
 };
-
+nationalParksArray
 // This function populates the location dropdown menu.
 // It grabs the dropdown element by its ID, then uses the populateDropdown function to populate it.
 function populateLocationDropdown() {

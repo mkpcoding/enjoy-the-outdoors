@@ -33,7 +33,6 @@ function displaySelectedMountain() {
   if (selectedMountain) {
     selectedMountainDiv.style.display = "block";
     mountainName.textContent = selectedMountain.name;
-    mountainElevation.textContent = `Elevation`;
 
     mountainElevation.textContent = `Elevation: ${selectedMountain.elevation} feet`;
     mountainEffort.textContent = `Effort: ${selectedMountain.effort}`;
